@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: amal
+      POSTGRES_DB: etudiants
+    ports:
+      - "5433:5432"
+    networks:
+      - etudiants-network
+
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/etudiants
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: amal
+    networks:
+      - etudiants-network
+
+networks:
+  etudiants-network:
+    driver: bridge
