@@ -14,7 +14,8 @@ public class EtudiantSteps {
 
     @Given("un étudiant avec la date de naissance {string}")
     public void unEtudiantAvecLaDateDeNaissance(String date) {
-        etudiant = new Etudiant(null, "12345678", "Test", LocalDate.parse(date));
+        etudiant = new Etudiant(null, "12345678", "Test",
+                LocalDate.parse(date), "test@email.com", 2020, null);
     }
 
     @When("on calcule son âge")

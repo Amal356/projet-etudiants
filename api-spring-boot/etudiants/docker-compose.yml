@@ -10,16 +10,26 @@ services:
     networks:
       - etudiants-network
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - etudiants-network
+
   api:
     build: .
     ports:
       - "8080:8080"
     depends_on:
       - db
+      - redis
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/etudiants
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: amal
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
     networks:
       - etudiants-network
 

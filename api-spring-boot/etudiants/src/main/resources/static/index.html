@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Étudiants</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #2196F3; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: #2196F3; color: white; padding: 12px; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+<h1>Liste des Étudiants</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>CIN</th>
+        <th>Nom</th>
+        <th>Date de Naissance</th>
+        <th>Âge</th>
+    </tr>
+    </thead>
+    <tbody id="tableau"></tbody>
+</table>
+
+<script>
+    fetch('/api/etudiants')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('tableau');
+            data.forEach(e => {
+                const age = new Date().getFullYear() - new Date(e.dateNaissance).getFullYear();
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${e.id}</td>
+                        <td>${e.cin}</td>
+                        <td>${e.nom}</td>
+                        <td>${e.dateNaissance}</td>
+                        <td>${age} ans</td>
+                    </tr>`;
+            });
+        })
+        .catch(err => console.error('Erreur:', err));
+</script>
+</body>
+</html>
