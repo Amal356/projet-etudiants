@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Data
@@ -20,4 +21,8 @@ public class Etudiant {
     private String cin;
     private String nom;
     private LocalDate dateNaissance;
+
+    public int age() {
+        return Period.between(this.dateNaissance, LocalDate.now()).getYears();
+    }
 }
